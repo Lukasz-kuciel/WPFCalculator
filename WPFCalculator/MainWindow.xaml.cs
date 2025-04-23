@@ -28,8 +28,7 @@ public partial class MainWindow : Window
     {
         Button? button = sender as Button;
         string? digit = button?.Content.ToString();
-        //Display.Content = Display.Content == "0" ? digit : Display.Content + digit;
-        
+
         if (Display.Content?.ToString() == "0")
         {
             Display.Content = digit;
@@ -64,11 +63,15 @@ public partial class MainWindow : Window
     private void DotButton_OnClick(object sender, RoutedEventArgs e)
     {
         
+        if (!Display.Content.ToString().Contains(","))
+        {
+            Display.Content += ",";
+        }
     }
 
     private void ClearButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Display.Content = "0";
+            Display.Content = "0";
     }
 
     private double Calcualte()
