@@ -33,6 +33,15 @@ public partial class MainWindow : Window
         }
     }
 
+    private void ChangeSignButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (double.TryParse(Display.Content?.ToString(), out double result))
+        {
+            result = -result;
+            Display.Content = result.ToString();
+        }
+    }
+
     private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
     {
         Button? button = sender as Button;
