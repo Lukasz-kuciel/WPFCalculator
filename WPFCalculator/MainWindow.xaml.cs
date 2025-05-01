@@ -1,13 +1,5 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WPFCalculator;
 
@@ -19,6 +11,7 @@ public partial class MainWindow : Window
     private double firstNumber = 0;
     private double secondNumber = 0;
     private string? symboloperator = null;
+    private bool isNewNumber = false;
     public MainWindow()
     {
         InitializeComponent();
@@ -29,15 +22,15 @@ public partial class MainWindow : Window
         Button? button = sender as Button;
         string? digit = button?.Content.ToString();
 
-        if (Display.Content?.ToString() == "0")
+        if (isNewNumber || Display.Content?.ToString() == "0")
         {
             Display.Content = digit;
+            isNewNumber = false;
         }
         else
         {
             Display.Content += digit;
         }
-
     }
 
     private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
@@ -45,18 +38,32 @@ public partial class MainWindow : Window
         Button? button = sender as Button;
         string? op = button?.Content.ToString();
 
+        if (!double.TryParse(Display.Content?.ToString(), out double currentNumber))
+        {
+            Display.Content = "Error";
+            return;
+        }
+
+        if (symboloperator != null)
+        {
+            secondNumber = currentNumber;
+            double result = Calculate();
+            Display.Content = result.ToString();
+            firstNumber = result;
+        }
+        else
+        {
+            firstNumber = currentNumber;
+        }
+
         if (op == "=")
         {
-            secondNumber = double.Parse(Display.Content.ToString());
-            var result = Calcualte();
-            Display.Content = result.ToString();
             symboloperator = null;
         }
         else
         {
-            firstNumber = double.Parse(Display.Content.ToString());
             symboloperator = op;
-            Display.Content = "0";
+            isNewNumber = true;
         }
     }
 
@@ -74,7 +81,7 @@ public partial class MainWindow : Window
             Display.Content = "0";
     }
 
-    private double Calcualte()
+    private double Calculate()
     {
         switch (symboloperator)
         {
@@ -85,7 +92,7 @@ public partial class MainWindow : Window
             case "*":   
                 return firstNumber * secondNumber;
             case ":":
-                return firstNumber / secondNumber;
+                return secondNumber != 0 ? firstNumber / secondNumber : double.NaN;
         }
         return 0;
     }

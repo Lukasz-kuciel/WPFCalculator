@@ -12,6 +12,7 @@
             <Setter Property="FontSize" Value="28"></Setter>
             <Setter Property="Background" Value="Aqua"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="8"></Setter>
@@ -166,6 +167,5 @@
             Grid.Column="3"
             Grid.Row="5"
         >=</Button>
-        
     </Grid>
 </Window>
