@@ -79,6 +79,10 @@ public partial class MainWindow : Window
     private void ClearButton_OnClick(object sender, RoutedEventArgs e)
     {
             Display.Content = "0";
+            firstNumber = 0;
+            secondNumber = 0;
+            symboloperator = null;
+            isNewNumber = false;
     }
 
     private double Calculate()
